@@ -1,0 +1,53 @@
+樱桃炸弹.png
+size:622,284
+filter:Linear,Linear
+pma:true
+图层 10
+bounds:349,15,74,73
+offsets:0,6,74,81
+图层 11
+bounds:429,109,191,173
+offsets:0,0,208,174
+图层 12
+bounds:483,7,51,43
+图层 13
+bounds:425,3,56,47
+offsets:0,4,58,51
+图层 14
+bounds:218,90,192,209
+offsets:4,1,197,210
+rotate:90
+图层 15
+bounds:56,42,50,139
+offsets:0,1,67,140
+rotate:90
+图层 16
+bounds:2,94,214,188
+offsets:0,1,214,189
+图层 17
+bounds:535,64,43,73
+offsets:1,1,44,74
+rotate:90
+图层 18
+bounds:103,7,27,33
+offsets:0,0,27,34
+图层 19
+bounds:56,2,45,38
+offsets:0,3,45,41
+图层 4
+bounds:2,2,90,52
+offsets:3,3,93,56
+rotate:90
+图层 5
+bounds:536,12,66,50
+offsets:0,0,68,50
+图层 6
+bounds:288,2,86,59
+offsets:1,0,87,60
+rotate:90
+图层 8
+bounds:197,2,89,86
+offsets:0,1,89,87
+图层 9
+bounds:429,52,104,55
+offsets:7,1,112,56
