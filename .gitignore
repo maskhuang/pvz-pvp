@@ -60,6 +60,8 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
+*.app/
+*.exe
 *.zip
 
 # Crashlytics generated file
@@ -84,3 +86,19 @@ PvZ-Unity/Library/ShaderCache/*
 
 # macOS
 .DS_Store
+
+# 大文件
+PvZ-Unity/pvz-pvp_test*
+PvZ-Unity/Library/PackageCache/*
+PvZ-Unity/Library/ArtifactDB
+PvZ-Unity/Library/Bee/*
+PvZ-Unity/Library/ShaderCache/*
+
+# 特定大文件
+**/resources.assets.resS
+**/libburst-llvm-16.dylib
+**/libburst-llvm-10.dylib
+**/burst-llvm-16.dll
+**/burst-llvm-16-arm64.dll
+**/UnityPlayer.dylib
+**/dsymutil
