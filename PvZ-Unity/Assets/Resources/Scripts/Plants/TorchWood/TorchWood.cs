@@ -8,9 +8,9 @@ public class TorchWood : Plant
     public int firePeaHurt = 30;
     public Collider2D burnRegionCollider;
 
-    int zombieNum = 0; //ÔÚ»ð¾æ×ÆÉË·¶Î§ÄÚµÄ½©Ê¬ÊýÁ¿
-    List<Collider2D> zombies = new List<Collider2D>();  //ÔÚ×ÆÉË·¶Î§ÄÚµÄ½©Ê¬ÁÐ±í
-    ContactFilter2D contactFilter = new ContactFilter2D();  //Åö×²ÌåÌ½²â¹ýÂËÆ÷£¬ÓÃÓÚÌ½²â½©Ê¬
+    int zombieNum = 0; //ï¿½Ú»ï¿½ï¿½ï¿½ï¿½ï¿½Ë·ï¿½Î§ï¿½ÚµÄ½ï¿½Ê¬ï¿½ï¿½ï¿½ï¿½
+    List<Collider2D> zombies = new List<Collider2D>();  //ï¿½ï¿½ï¿½ï¿½ï¿½Ë·ï¿½Î§ï¿½ÚµÄ½ï¿½Ê¬ï¿½Ð±ï¿½
+    ContactFilter2D contactFilter = new ContactFilter2D();  //ï¿½ï¿½×²ï¿½ï¿½Ì½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì½ï¿½â½©Ê¬
 
     protected override void Start()
     {
@@ -26,12 +26,12 @@ public class TorchWood : Plant
     {
         if(collision.tag == "Pea")
         {
-            //Éú³É»ðÍã¶¹
+            //ï¿½ï¿½ï¿½É»ï¿½ï¿½ã¶¹
             Instantiate(firePea,
                         collision.transform.position,
                         Quaternion.Euler(0, 0, 0))
                 .GetComponent<StraightBullet>().initialize(row, firePeaHurt);
-            //Ïú»ÙÍã¶¹
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ã¶¹
             Destroy(collision.gameObject);
         }
         else if(collision.tag == "Zombie" && collision.GetComponent<Zombie>().pos_row == row)
@@ -58,7 +58,7 @@ public class TorchWood : Plant
 
     private void burnZombie()
     {
-        if(burnRegionCollider.OverlapCollider(contactFilter, zombies) != 0)
+        if(burnRegionCollider.Overlap(contactFilter, zombies) != 0)
         {
             foreach(Collider2D collider in zombies)
             {

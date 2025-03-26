@@ -102,3 +102,69 @@ PvZ-Unity/Library/ShaderCache/*
 **/burst-llvm-16-arm64.dll
 **/UnityPlayer.dylib
 **/dsymutil
+
+# Unity generated
+PvZ-Unity/[Ll]ibrary/
+PvZ-Unity/[Tt]emp/
+PvZ-Unity/[Oo]bj/
+PvZ-Unity/[Bb]uild/
+PvZ-Unity/[Bb]uilds/
+PvZ-Unity/[Ll]ogs/
+PvZ-Unity/[Uu]ser[Ss]ettings/
+
+# MemoryCaptures can get excessive in size.
+PvZ-Unity/[Mm]emoryCaptures/
+
+# Visual Studio / MonoDevelop generated
+PvZ-Unity/.vs/
+PvZ-Unity/.vscode/
+PvZ-Unity/*.csproj
+PvZ-Unity/*.unityproj
+PvZ-Unity/*.sln
+PvZ-Unity/*.suo
+PvZ-Unity/*.tmp
+PvZ-Unity/*.user
+PvZ-Unity/*.userprefs
+PvZ-Unity/*.pidb
+PvZ-Unity/*.booproj
+PvZ-Unity/*.svd
+PvZ-Unity/*.pdb
+PvZ-Unity/*.mdb
+PvZ-Unity/*.opendb
+PvZ-Unity/*.VC.db
+
+# Unity3D generated meta files
+PvZ-Unity/*.pidb.meta
+PvZ-Unity/*.pdb.meta
+PvZ-Unity/*.mdb.meta
+
+# Unity3D generated file on crash reports
+PvZ-Unity/sysinfo.txt
+
+# Builds
+PvZ-Unity/*.apk
+PvZ-Unity/*.aab
+PvZ-Unity/*.unitypackage
+PvZ-Unity/*.app
+PvZ-Unity/*.exe
+PvZ-Unity/*.zip
+PvZ-Unity/*.dmg
+
+# Package cache (often contains large files)
+PvZ-Unity/Library/PackageCache/
+
+# 特别指定一些已知的大文件
+PvZ-Unity/pvz-pvp_test.app/
+PvZ-Unity/pvz-pvp_test.zip
+PvZ-Unity/pvz-pvp_test_Data/
+PvZ-Unity/Library/PackageCache/com.unity.burst@1.8.18/
+PvZ-Unity/Library/ArtifactDB
+PvZ-Unity/Library/Artifacts/
+PvZ-Unity/Library/ShaderCache/
+
+# 额外的二进制文件
+PvZ-Unity/**/*.dylib
+PvZ-Unity/**/*.so
+PvZ-Unity/**/*.dll
+PvZ-Unity/**/*.bundle
+PvZ-Unity/**/*.resS
