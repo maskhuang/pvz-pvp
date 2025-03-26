@@ -190,6 +190,7 @@ PvZ-Unity/[Mm]emoryCaptures/
 # 资产目录中的临时文件
 PvZ-Unity/Assets/[Tt]emp/
 PvZ-Unity/Assets/[Rr]esources/[Aa]nimations/test/
+PvZ-Unity/Assets/Temp/CherryBoom/
 
 # 示例动画和Flash工具目录
 PvZ-Unity/Assets/FlashTools/Example/
