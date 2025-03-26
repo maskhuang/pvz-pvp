@@ -173,3 +173,80 @@ PvZ-Unity/**/*.resS
 PvZ-Unity/Assets/Temp/
 PvZ-Unity/Assets/Resources/Animations/test/
 PvZ-Unity/Assets/FlashTools/Example/
+
+# Unity项目通用忽略配置
+# Unity生成的目录
+PvZ-Unity/[Ll]ibrary/
+PvZ-Unity/[Tt]emp/
+PvZ-Unity/[Oo]bj/
+PvZ-Unity/[Bb]uild/
+PvZ-Unity/[Bb]uilds/
+PvZ-Unity/[Ll]ogs/
+PvZ-Unity/[Uu]ser[Ss]ettings/
+
+# MemoryCaptures可用于性能分析
+PvZ-Unity/[Mm]emoryCaptures/
+
+# 资产目录中的临时文件
+PvZ-Unity/Assets/[Tt]emp/
+PvZ-Unity/Assets/[Rr]esources/[Aa]nimations/test/
+
+# 示例动画和Flash工具目录
+PvZ-Unity/Assets/FlashTools/Example/
+
+# 可能包含大体积资源的目录
+PvZ-Unity/pvz-pvp_test.app/
+PvZ-Unity/pvz-pvp_test.zip
+PvZ-Unity/Assets/PackageCache/
+
+# Unity3D生成的meta文件
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity3D生成的崩溃报告文件
+sysinfo.txt
+
+# 构建文件
+*.apk
+*.aab
+*.unitypackage
+*.app
+*.exe
+*.zip
+*.resS
+
+# 包缓存和已知的大文件
+PvZ-Unity/Library/PackageCache/
+*.dylib
+*.so
+*.dll
+*.bundle
+
+# Visual Studio/MonoDevelop生成的文件
+PvZ-Unity/.vs/
+PvZ-Unity/.vscode/
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+
+# OS生成的文件
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
