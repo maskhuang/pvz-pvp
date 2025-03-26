@@ -168,3 +168,8 @@ PvZ-Unity/**/*.so
 PvZ-Unity/**/*.dll
 PvZ-Unity/**/*.bundle
 PvZ-Unity/**/*.resS
+
+# 添加特定的资源文件
+PvZ-Unity/Assets/Temp/
+PvZ-Unity/Assets/Resources/Animations/test/
+PvZ-Unity/Assets/FlashTools/Example/
