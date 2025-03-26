@@ -60,6 +60,7 @@ sysinfo.txt
 *.aab
 *.unitypackage
 *.app
+*.zip
 
 # Crashlytics generated file
 crashlytics-build.properties
@@ -70,6 +71,16 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+# Large files directory
+PvZ-Unity/pvz-pvp_test*
+PvZ-Unity/Library/PackageCache/*
+PvZ-Unity/Library/ArtifactDB*
+PvZ-Unity/Library/Artifacts/*
+PvZ-Unity/Library/ScriptAssemblies/*
+PvZ-Unity/Library/PlayerDataCache/*
+PvZ-Unity/Library/PackageManager/*
+PvZ-Unity/Library/ShaderCache/*
 
 # macOS
 .DS_Store
