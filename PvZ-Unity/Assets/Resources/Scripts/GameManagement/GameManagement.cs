@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using PvZ.Timer; // 引入Timer命名空间
 
 public class GameManagement : MonoBehaviour
 {
@@ -41,16 +42,6 @@ public class GameManagement : MonoBehaviour
 
         //����UI
         uiManagement.GetComponent<UIManagement>().initUI();
-
-        //只有不是第5关时才加载对话框
-        if (level != 5)
-        {
-            //ضԻ
-            Instantiate(Resources.Load<UnityEngine.Object>("Prefabs/UI/DialogPanel/DialogPanel-Level" + level),
-                        new Vector3(0, 0, 0),
-                        Quaternion.Euler(0, 0, 0),
-                        GameObject.Find("TopCanvas").transform);
-        }
     }
 
     public void awakeAll()
@@ -62,6 +53,9 @@ public class GameManagement : MonoBehaviour
         uiManagement.GetComponent<UIManagement>().appear();
         zombieManagement.GetComponent<ZombieManagement>().activate();
         levelController.activate();
+        
+        // 启动计时器
+        this.StartTimer(); // 使用扩展方法启动Timer
     }
 
     public void gameOver()

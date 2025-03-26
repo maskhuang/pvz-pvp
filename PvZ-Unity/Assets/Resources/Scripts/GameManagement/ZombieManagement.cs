@@ -3,18 +3,21 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-
+using static System.Math;
+using Random = UnityEngine.Random;
 public class ZombieManagement : MonoBehaviour
 {
     public GameObject[] zombies;   // 可生成僵尸列表
     private Dictionary<string, int> zombiesName = new Dictionary<string, int>();   // 僵尸名称与对象索引的字典
     private int zombieNumAll = 0;  // 当前存活的僵尸总数
     private List<int> rowList = new List<int>();  // 可生成僵尸行列表
-    private float initPos_x = 10.0f;  // 僵尸初始X坐标
+    private float initPos_x = 5.0f;  // 僵尸初始X坐标
     private PhotonView photonView;  // Photon视图组件
     private AudioSource audioSource;  // 音频源组件
     private DecreasingSlider flagMeter;  // 关卡进度条
     private bool isOver = false;  // 关卡是否结束
+
+    private int waveCount = 0;  // 当前波次
 
     private void Awake()
     {
@@ -66,41 +69,34 @@ public class ZombieManagement : MonoBehaviour
         // 只有房主负责生成僵尸
         if (PhotonNetwork.IsMasterClient)
         {
-            // 从JSON文件加载僵尸生成数据
-            TextAsset zombieDataJson = Resources.Load<TextAsset>($"Json/ZombieData/Level{GameManagement.levelData.level}");
-            if (zombieDataJson != null)
-            {
-                Debug.Log("[Zombie] 成功加载僵尸生成数据");
-                try
-                {
-                    TimeNodes timeNodes = JsonUtility.FromJson<TimeNodes>(zombieDataJson.text);
-                    if (timeNodes != null && timeNodes.info != null && timeNodes.info.Count > 0)
-                    {
-                        Debug.Log($"[Zombie] 成功解析JSON数据，节点数量: {timeNodes.info.Count}");
-                        StartCoroutine(SpawnZombiesCoroutine(timeNodes));
-                    }
-                    else
-                    {
-                        Debug.LogError("[Zombie] JSON数据解析失败或节点数量为0");
-                        StartCoroutine(FallbackZombieSpawn());
-                    }
-                }
-                catch (Exception e)
-                {
-                    Debug.LogError($"[Zombie] JSON解析出错: {e.Message}");
-                    StartCoroutine(FallbackZombieSpawn());
-                }
-            }
-            else
-            {
-                Debug.LogError("[Zombie] 无法加载僵尸生成数据，使用后备方案");
-                StartCoroutine(FallbackZombieSpawn());
-            }
+            Debug.Log("[Zombie] 房主开始生成僵尸");
+            StartCoroutine(StartZombieGenerationCoroutine());
+            
         }
         else
         {
-            Debug.Log("[Zombie] 非房主，等待接收僵尸生成消息");
+            Debug.Log("[Zombie] 非房主，等待房主的生成指令");
         }
+    }
+    private IEnumerator StartZombieGenerationCoroutine()
+    {
+        Debug.Log("[Zombie] 开始僵尸生成循环");
+        
+        // 初始等待一段时间，让玩家准备
+        yield return new WaitForSeconds(30f);
+        
+        while(!isOver)
+        {
+            photonView.RPC("StartZombieGeneration", RpcTarget.All);
+            yield return new WaitForSeconds(20f);
+        }
+    }
+
+    [PunRPC]
+    private void StartZombieGeneration()
+    {
+        Debug.Log("[Zombie] 收到房主的生成指令，开始生成僵尸");
+        SpawnZombiesCoroutine();
     }
 
     private void initRowList()
@@ -113,63 +109,29 @@ public class ZombieManagement : MonoBehaviour
         Debug.Log($"[Zombie] 初始化行列表，可用行数: {rowList.Count}");
     }
 
-    private IEnumerator SpawnZombiesCoroutine(TimeNodes timeNodes)
+    private void SpawnZombiesCoroutine()
     {
-        Debug.Log($"[Zombie] 开始生成僵尸波次，总节点数: {timeNodes.info.Count}");
-        int nodeIndex = 0;
+        Debug.Log($"[Zombie] 开始生成僵尸波次，当前波次：{waveCount}");
         
-        foreach (var node in timeNodes.info)
+        
+        int zombieNumber = (int)(1+waveCount/3);
+        Debug.Log($"[Zombie] 第{waveCount}波开始，将生成{zombieNumber}个僵尸");
+
+        // 生成本波次的僵尸
+        while (zombieNumber > 0)
         {
-            nodeIndex++;
-            Debug.Log($"[Zombie] 第{nodeIndex}个节点: 等待 {node.deltaTime} 秒后生成 {node.number} 个 {node.zombie}");
-            yield return new WaitForSeconds(node.deltaTime);
-
-            if (node.isWave)
-            {
-                if (node.isFinalWave)
-                {
-                    Debug.Log("[Zombie] 最终波次!");
-                    // TODO: 显示最终波次字幕
-                }
-                else
-                {
-                    Debug.Log("[Zombie] 大波僵尸来袭!");
-                    // TODO: 显示大波僵尸字幕
-                }
-            }
-
+            // 随机选择僵尸类型
+            int index = Random.Range(0, zombies.Length);
+            string zombieType = zombies[index].name;
+                
+            // 随机选择行
+            int row = Random.Range(0, GameManagement.levelData.landRowCount);
+                
             // 生成僵尸
-            for (int i = 0; i < node.number; i++)
-            {
-                if (rowList.Count == 0) initRowList();
-                
-                int rowIndex = UnityEngine.Random.Range(0, rowList.Count);
-                int row = rowList[rowIndex];
-                rowList.RemoveAt(rowIndex);
-                
-                // 通过RPC同步僵尸生成
-                photonView.RPC("SpawnZombieRPC", RpcTarget.All, row, node.zombie);
-                
-                yield return new WaitForSeconds(0.5f);
-            }
-
-            // 更新进度条
-            if (flagMeter != null)
-            {
-                float progress = 1f - ((float)nodeIndex / timeNodes.info.Count);
-                flagMeter.setValue(progress);
-            }
+            SpawnZombieInRow(row, zombieType);
+            zombieNumber--;
         }
-        
-        isOver = true;
-        Debug.Log("[Zombie] 所有波次生成完成");
-    }
-
-    [PunRPC]
-    private void SpawnZombieRPC(int row, string zombieType)
-    {
-        Debug.Log($"[Zombie] 收到RPC请求：在第 {row} 行生成 {zombieType}");
-        SpawnZombieInRow(row, zombieType);
+        waveCount ++;
     }
 
     public void SpawnZombieInRow(int row, string zombieType)
@@ -179,11 +141,10 @@ public class ZombieManagement : MonoBehaviour
         try 
         {
             Vector3 position = new Vector3(initPos_x, GameManagement.levelData.zombieInitPosY[row], 0);
-            // 修改预制体路径，确保从Resources文件夹加载
+            
             string prefabPath = $"Prefabs/Zombies/{zombieType}";
             Debug.Log($"[Zombie] 尝试加载预制体: {prefabPath}");
             
-            // 先检查预制体是否存在
             GameObject prefab = Resources.Load<GameObject>(prefabPath);
             if (prefab == null)
             {
@@ -191,14 +152,17 @@ public class ZombieManagement : MonoBehaviour
                 return;
             }
             
-            GameObject zombie = PhotonNetwork.Instantiate(prefabPath, position, Quaternion.Euler(0, 0, 0));
+            // 直接使用普通的Instantiate生成僵尸
+            GameObject zombie = Instantiate(prefab, position, Quaternion.Euler(0, 0, 0));
             
             if (zombie != null)
             {
                 Zombie zombieComponent = zombie.GetComponent<Zombie>();
                 if (zombieComponent != null)
                 {
+                    // 先设置行号，这会影响渲染顺序
                     zombieComponent.setPosRow(row);
+
                     zombieComponent.cancelSleep();
                     zombieNumAll++;
                     Debug.Log($"[Zombie] 僵尸生成成功，当前存活数量: {zombieNumAll}");
@@ -267,7 +231,7 @@ public class ZombieManagement : MonoBehaviour
                 yield return new WaitForSeconds(0.5f);
             }
             
-            yield return new WaitForSeconds(20f);
+            yield return new WaitForSeconds(10f);
         }
         
         isOver = true;
@@ -276,7 +240,21 @@ public class ZombieManagement : MonoBehaviour
     public void generateFunc(int row, string zombieType)
     {
         Debug.Log($"[Zombie] generateFunc被调用：行={row}，僵尸类型={zombieType}");
-        photonView.RPC("SpawnZombieRPC", RpcTarget.All, row, zombieType);
+        // 使用PhotonNetwork.Instantiate生成需要同步的僵尸
+        string prefabPath = $"Prefabs/Zombies/{zombieType}";
+        Vector3 position = new Vector3(initPos_x, GameManagement.levelData.zombieInitPosY[row], 0);
+        GameObject zombie = PhotonNetwork.Instantiate(prefabPath, position, Quaternion.Euler(0, 0, 0));
+        
+        if (zombie != null)
+        {
+            Zombie zombieComponent = zombie.GetComponent<Zombie>();
+            if (zombieComponent != null)
+            {
+                zombieComponent.setPosRow(row);
+                zombieComponent.cancelSleep();
+                zombieNumAll++;
+            }
+        }
     }
 
     public void createGhost(int row)
@@ -289,6 +267,22 @@ public class ZombieManagement : MonoBehaviour
     {
         Debug.Log($"[Zombie] createZombieByGod被调用：行={row}，僵尸类型={zombieType}");
         photonView.RPC("SpawnZombieRPC", RpcTarget.All, row, zombieType);
+    }
+
+    // 用于在僵尸死亡时通知对方生成僵尸
+    public void OnZombieDeath(int row, string zombieType)
+    {
+        Debug.Log($"[Zombie] 僵尸死亡事件触发：行={row}，类型={zombieType}，IsMine={photonView.IsMine}");
+                    // 通知对方在对应行生成僵尸
+        photonView.RPC("SpawnZombieOnDeath", RpcTarget.Others, row, zombieType);
+    }
+
+    [PunRPC]
+    private void SpawnZombieOnDeath(int row, string zombieType)
+    {
+        Debug.Log($"[Zombie] 收到僵尸死亡RPC：行={row}，类型={zombieType}");
+        // 在对方场地生成僵尸
+        SpawnZombieInRow(row, zombieType);
     }
 }
 

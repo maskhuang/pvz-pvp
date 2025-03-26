@@ -11,15 +11,15 @@ public class UIManagement : MonoBehaviour
     public GameObject shovelBank;
     public Text levelNameText;
 
-    public GameObject cardGroup;   //¿¨²ÛÈº×é
+    public GameObject cardGroup;   //ï¿½ï¿½ï¿½ï¿½Èºï¿½ï¿½
 
     // Start is called before the first frame update
     public void initUI()
     {
-        //¼ÓÔØ¹Ø¿¨Ãû×Ö
+        //ï¿½ï¿½ï¿½Ø¹Ø¿ï¿½ï¿½ï¿½ï¿½ï¿½
         levelNameText.text = GameManagement.levelData.levelName;
 
-        //¼ÓÔØ¿¨²ÛÈº×é£¬²¢ÉèÖÃÏà¹ØUIµÄ´óÐ¡Î»ÖÃ
+        //ï¿½ï¿½ï¿½Ø¿ï¿½ï¿½ï¿½Èºï¿½é£¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½UIï¿½Ä´ï¿½Ð¡Î»ï¿½ï¿½
         List<string> plantCards = GameManagement.levelData.plantCards;
         List<Card> cards = new List<Card>();
         foreach (string plant in plantCards)
@@ -43,10 +43,10 @@ public class UIManagement : MonoBehaviour
 
     public void appear()
     {
-        //¿¨²ÛÈº×é±¾Îª²»»îÔ¾£¬ÒÔ±ÜÃâ¾çÇéÆÚ¼ä¿¨²ÛÀäÈ´¼õÉÙ
+        //ï¿½ï¿½ï¿½ï¿½Èºï¿½é±¾Îªï¿½ï¿½ï¿½ï¿½Ô¾ï¿½ï¿½ï¿½Ô±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ú¼ä¿¨ï¿½ï¿½ï¿½ï¿½È´ï¿½ï¿½ï¿½ï¿½
         cardGroup.SetActive(true);
 
         topMotionPanel.GetComponent<MotionPanel>().startMove();
-        bottomMotionPanel.GetComponent<MotionPanel>().startMove();
+        //bottomMotionPanel.GetComponent<MotionPanel>().startMove();
     }
 }

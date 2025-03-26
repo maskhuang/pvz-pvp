@@ -29,6 +29,8 @@ public class Plant : MonoBehaviour
         {
             intensify();
         }
+        //float zPosition = 200 * row + 100 * UnityEngine.Random.Range(0.0f, 1.0f);
+        transform.position = new Vector3(transform.position.x, transform.position.y, 0);
     }
 
     public virtual int beAttacked(int hurt, string form)

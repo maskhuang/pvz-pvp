@@ -43,6 +43,15 @@ MonoBehaviour:
   - RespawnSpaceship
   - SyncZombieSpawn
   - SpawnZombieRPC
+  - RPCDie
+  - SpawnZombieOnDeath
+  - StartZombieGeneration
+  - RPC_PauseTimer
+  - RPC_ResumeTimer
+  - RPC_StartTimer
+  - RPC_SyncTime
+  - RPC_TimerEnd
+  - ClientReady
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -11,6 +11,8 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
     public event Action OnGameStart;
     private const string GAME_VERSION = "1.0.0";
 
+    private bool gameStarted = false;
+
     private void Awake()
     {
         Debug.Log("[Photon] 初始化网络管理器");
@@ -173,15 +175,7 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
             Debug.Log($"[Photon] {prop.Key} = {prop.Value}");
         }
         
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
-        {
-            Debug.Log("[Photon] 房间人数已满，准备开始游戏");
-            if (PhotonNetwork.IsMasterClient)
-            {
-                Debug.Log("[Photon] 作为房主发送开始游戏RPC");
-                GetComponent<PhotonView>().RPC("StartGame", RpcTarget.All);
-            }
-        }
+        tryStartGame();
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -189,14 +183,12 @@ public class PhotonNetworkManager : MonoBehaviourPunCallbacks
         Debug.Log($"[Photon] 新玩家加入: {newPlayer.NickName}");
         Debug.Log($"[Photon] 当前房间人数: {PhotonNetwork.CurrentRoom.PlayerCount}");
         
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
-        {
-            Debug.Log("[Photon] 房间人数已满，准备开始游戏");
-            if (PhotonNetwork.IsMasterClient)
-            {
-                Debug.Log("[Photon] 作为房主发送开始游戏RPC");
-                GetComponent<PhotonView>().RPC("StartGame", RpcTarget.All);
-            }
+        tryStartGame();
+    }
+    private void tryStartGame(){
+        if(!gameStarted && PhotonNetwork.CurrentRoom.PlayerCount == 2){
+            GetComponent<PhotonView>().RPC("StartGame", RpcTarget.All);
+            gameStarted = true;
         }
     }
 

@@ -8,7 +8,7 @@ public abstract class SunBase : MonoBehaviour
 
     protected bool dropState;  //阳光是否正在掉落
     bool pickState;  //阳光是否被拾取
-    Vector3 finalPos = new Vector3(-4.47f, 2.61f, 0f);  //拾取阳光动画终点
+    Vector3 finalPos = new Vector3(-3.12f, 2.61f, 0f);  //拾取阳光动画终点
     float timer = 0, disappearTime = 15.0f;   //计时器，阳光多久后消失
     SpriteRenderer mySpriteRenderer;   //用于阳光逐渐消失
 

@@ -798,11 +798,11 @@ PlayerSettings:
   apiCompatibilityLevel: 6
   activeInputHandler: 0
   windowsGamepadBackendHint: 0
-  cloudProjectId: 
+  cloudProjectId: 94a40100-88c6-47e5-896c-735063efe0e6
   framebufferDepthMemorylessMode: 0
   qualitySettingsNames: []
-  projectName: 
-  organizationId: 
+  projectName: PvZ-Unity 2025-03-25_22-16-55
+  organizationId: yadaze
   cloudEnabled: 0
   legacyClampBlendShapeWeights: 0
   playerDataPath: 
