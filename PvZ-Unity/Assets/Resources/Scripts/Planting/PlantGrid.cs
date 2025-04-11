@@ -5,26 +5,26 @@ using UnityEngine;
 
 public class PlantGrid : MonoBehaviour
 {
-    #region ±äÁ¿
+    #region å˜é‡
 
-    public int row;   //ÔÚµÚ¼¸ĞĞ
+    public int row;   //åœ¨ç¬¬å‡ è¡Œ
 
-    GameObject toBePlanted;   //To Be Planted¶ÔÏó
-    GameObject selectedShovel;        //SelectedShovel¶ÔÏó
+    GameObject toBePlanted;   //To Be Plantedå¯¹è±¡
+    GameObject selectedShovel;        //SelectedShovelå¯¹è±¡
 
-    SpriteRenderer spriteRenderer;  //×ÔÉíSpriteRenderer×é¼ş
-    AudioSource audioSource;   //×ÔÉíAudioSource×é¼ş
+    SpriteRenderer spriteRenderer;  //è‡ªèº«SpriteRendererç»„ä»¶
+    AudioSource audioSource;   //è‡ªèº«AudioSourceç»„ä»¶
 
-    bool havePlanted = false;   //¸Ã¸ñÊÇ·ñÒÑÖÖÖ²Ö²Îï
-    GameObject nowPlant;    //µ±Ç°ËùÖÖÖ²Îï
+    bool havePlanted = false;   //è¯¥æ ¼æ˜¯å¦å·²ç§æ¤æ¤ç‰©
+    GameObject nowPlant;    //å½“å‰ç§æ¤çš„æ¤ç‰©
 
     #endregion
 
-    #region ÏµÍ³ÏûÏ¢
+    #region ç³»ç»Ÿæ¶ˆæ¯
 
     private void Awake()
     {
-        //»ñÈ¡¶ÔÏóÓë×é¼ş
+        //è·å–å¿…è¦ç»„ä»¶
         toBePlanted = GameObject.Find("To Be Planted");
         selectedShovel = GameObject.Find("SelectedShovel");
 
@@ -36,7 +36,12 @@ public class PlantGrid : MonoBehaviour
     {
         if(havePlanted == false && toBePlanted.activeSelf == true)
         {
-            spriteRenderer.sprite = toBePlanted.GetComponent<SpriteRenderer>().sprite;
+            // æ ¹æ®è¦ç§æ¤çš„æ¤ç‰©ç±»å‹å†³å®šå¦‚ä½•æ˜¾ç¤ºé¢„è§ˆ
+            if (toBePlanted.GetComponent<SpriteRenderer>() != null)
+            {
+                spriteRenderer.sprite = toBePlanted.GetComponent<SpriteRenderer>().sprite;
+            }
+            // å¦‚æœæ˜¯ä½¿ç”¨MeshRendererçš„æ¤ç‰©ï¼Œä¸æ˜¾ç¤ºé¢„è§ˆï¼ˆæˆ–è€…å¯ä»¥ç”¨å…¶ä»–æ–¹å¼æ˜¾ç¤ºï¼‰
         }
         else if(havePlanted == true && selectedShovel.activeSelf == true)
         {
@@ -70,48 +75,52 @@ public class PlantGrid : MonoBehaviour
 
     #endregion
 
-    #region Ë½ÓĞ×Ô¶¨Òåº¯Êı
+    #region ç§æœ‰è‡ªå®šä¹‰å‡½æ•°
 
     #endregion
 
-    #region ¹«ÓĞ×Ô¶¨Òåº¯Êı
+    #region å…¬æœ‰è‡ªå®šä¹‰å‡½æ•°
 
     public void plant(string name)
     {
-        spriteRenderer.sprite = null;   //Òş²ØĞéÓ°
-        havePlanted = true;   //ÒÑÖÖÖ²Îï
+        //æ¸…é™¤é˜´å½±
+        spriteRenderer.sprite = null;
+        
+        havePlanted = true;   //å·²ç§æ¤
 
-        //Éú³ÉÖ²Îï
+        //ç”Ÿæˆæ¤ç‰©
+        Debug.Log("[PlantGrid] æ­£åœ¨å®ä¾‹åŒ–æ¤ç‰©: " + name);
         nowPlant = Instantiate(Resources.Load<GameObject>("Prefabs/Plants/" + name),
                                 transform.position + new Vector3(0, 0, 5),
                                 Quaternion.Euler(0, 0, 0),
                                 transform);
+        
         nowPlant.GetComponent<Plant>().initialize(
             this,
             spriteRenderer.sortingLayerName,
             spriteRenderer.sortingOrder
         );
 
-        //²¥·ÅÒôĞ§
+        //æ’­æ”¾éŸ³æ•ˆ
         audioSource.clip =
             Resources.Load<AudioClip>("Sounds/UI/SeedAndShovelBank/plant");
         audioSource.Play();
 
-        //ÏòPlantingManagement·¢ËÍÏûÏ¢ÒÔ´¦ÀíUIÏà¹ØÊÂ¼ş
+        //å‘PlantingManagementå‘é€æ¶ˆæ¯ä»¥å¤„ç†UIç›¸å…³äº‹ä»¶
         GameObject.Find("Planting Management").GetComponent<PlantingManagement>().plant();
-
     }
 
-    //ÉÏµÛÄ£Ê½ÖÖÖ²£¬ÓÃÓÚ¹Ø¿¨¿ªÊ¼¶Ô»°Éú³É²ÎÓë¶Ô»°µÄÖ²Îï
+    //ä¸Šå¸æ¨¡å¼ç§æ¤ï¼Œç”¨äºå…³å¡å¼€å§‹æˆ–å›åˆå¼€å§‹ç§æ¤
     public GameObject plantByGod(string name)
     {
-        havePlanted = true;   //ÒÑÖÖÖ²Îï
+        havePlanted = true;   //å·²ç§æ¤
 
-        //Éú³ÉÖ²Îï
+        //ç”Ÿæˆæ¤ç‰©
         nowPlant = Instantiate(Resources.Load<GameObject>("Prefabs/Plants/" + name),
                                           transform.position + new Vector3(0, 0, 5),
                                           Quaternion.Euler(0, 0, 0),
                                           transform);
+        
         nowPlant.GetComponent<Plant>().initialize(
             this,
             spriteRenderer.sortingLayerName,
@@ -123,13 +132,13 @@ public class PlantGrid : MonoBehaviour
 
     public void plantDie(string reason)
     {
-        havePlanted = false;   //ÒÑÃ»ÓĞÖ²Îï
+        havePlanted = false;   //å·²æ²¡æœ‰æ¤ç‰©
 
         AudioClip clip = null;
         if (reason != "") clip = Resources.Load<AudioClip>("Sounds/Plants/" + reason);
         if (clip != null)
         {
-            //²¥·ÅÒôĞ§
+            //æ’­æ”¾éŸ³æ•ˆ
             audioSource.clip = clip; 
             audioSource.Play();
         }
