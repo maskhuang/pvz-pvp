@@ -5,3 +5,10 @@ TextScriptImporter:
   userData: 
   assetBundleName: 
   assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 73323
+  packageName: Flash Animation Toolset
+  packageVersion: 1.4.1
+  assetPath: Assets/FlashTools/Docs/USERGUIDE.md
+  uploadId: 741369
