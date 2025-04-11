@@ -30,6 +30,7 @@ public class Card : MonoBehaviour
     {
         //该组件须由管理对象加载，故在Start获取
         planting = GameObject.Find("Planting Management").GetComponent<PlantingManagement>();
+        Debug.Log($"[Card] {plantName} - Start初始化: 阳光消耗={sunNeeded}, 冷却时间={coolingTime}");
 
         if (coolingTime > 10f) cooling();
         else endCooling();
@@ -49,6 +50,7 @@ public class Card : MonoBehaviour
 
     public void cooling()
     {
+        Debug.Log($"[Card] {plantName} - 进入冷却状态");
         coolingState = true;
         timer = 0;
         lowerImage.fillAmount = 1;
@@ -59,6 +61,7 @@ public class Card : MonoBehaviour
 
     private void endCooling()
     {
+        Debug.Log($"[Card] {plantName} - 结束冷却状态, sunEnough={sunEnough}");
         coolingState = false;
         lowerImageObj.SetActive(false);
         if (sunEnough)
@@ -89,6 +92,7 @@ public class Card : MonoBehaviour
 
     public void click()
     {
+        Debug.Log($"[Card] {plantName} - 点击卡片");
         //播放音效
         gameObject.GetComponent<AudioSource>().Play();
 

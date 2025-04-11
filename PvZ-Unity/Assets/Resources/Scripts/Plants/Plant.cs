@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Spine.Unity;
 public class Plant : MonoBehaviour
 {
     protected PlantGrid myGrid;   //该植物所在Grid
@@ -151,8 +151,23 @@ public class Plant : MonoBehaviour
 
     public virtual void initialize(PlantGrid grid, string sortingLayer, int sortingOrder)
     {
-        GetComponent<SpriteRenderer>().sortingLayerName = sortingLayer;
-        GetComponent<SpriteRenderer>().sortingOrder = sortingOrder;
+        // 根据渲染器类型设置排序层
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        MeshRenderer meshRenderer = GetComponent<MeshRenderer>();
+
+        if (spriteRenderer != null)
+        {
+            spriteRenderer.sortingLayerName = sortingLayer;
+            spriteRenderer.sortingOrder = sortingOrder;
+        }
+        else if (meshRenderer != null)
+        {
+            // 对于MeshRenderer，可能需要其他方式来处理渲染顺序
+            // 或者直接跳过排序层设置
+            meshRenderer.sortingOrder = sortingOrder;
+            meshRenderer.sortingLayerName = sortingLayer;
+        }
+
         row = grid.row;
         myGrid = grid;
     }

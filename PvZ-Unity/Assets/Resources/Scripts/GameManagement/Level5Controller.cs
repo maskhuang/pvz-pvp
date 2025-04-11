@@ -78,7 +78,8 @@ public class Level5Controller : LevelController
                 "PeaShooter",
                 "WallNut",
                 "Squash",
-                "TorchWood"
+                "TorchWood",
+                "CherryBomb"
             }
         };
         Debug.Log("[Level5] 关卡数据初始化完成");

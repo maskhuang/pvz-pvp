@@ -57,7 +57,8 @@ public class Level6Controller : LevelController
                 "PeaShooter",
                 "WallNut",
                 "Squash",
-                "TorchWood"
+                "TorchWood",
+                "CherryBomb",
             }
         };
         Debug.Log("[Level6] 关卡数据初始化完成");
