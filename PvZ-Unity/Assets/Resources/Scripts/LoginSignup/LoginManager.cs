@@ -30,7 +30,7 @@ public class LoginManager : MonoBehaviour
             return;
         }
 
-        // 调用异步协程进行登录操作
+        // 调用协程进行登录
         StartCoroutine(LoginRoutine(username, password));
     }
 
@@ -48,26 +48,43 @@ public class LoginManager : MonoBehaviour
 
         using (UnityWebRequest www = UnityWebRequest.Post(loginUrl, form))
         {
+            // 等待请求完成
             yield return www.SendWebRequest();
 
-            // 检查网络请求状态
-            if (www.result != UnityWebRequest.Result.Success)
+            // 后端返回的原始响应内容（无论成功或失败）
+            string rawResponse = www.downloadHandler.text;
+
+            // 判断 HTTP 请求本身是否成功（状态码 200~299）
+            if (www.result == UnityWebRequest.Result.Success)
             {
-                messageText.text = "请求失败: " + www.error;
-            }
-            else
-            {
-                string result = www.downloadHandler.text;
-                // 解析服务器返回的 JSON 格式数据
-                LoginResponse response = JsonUtility.FromJson<LoginResponse>(result);
+                // 请求成功，尝试解析 JSON
+                LoginResponse response = JsonUtility.FromJson<LoginResponse>(rawResponse);
                 if (response.success)
                 {
                     messageText.text = "登录成功！";
-                    // 可在此处切换场景或执行后续业务逻辑
+                    // 跳转到主场景或执行后续逻辑
+                    SceneManager.LoadScene("Main_Scene");
                 }
                 else
                 {
+                    // 即使是 200 状态码，服务端也可能返回 { success=false, message=... }
                     messageText.text = "登录失败: " + response.message;
+                }
+            }
+            else
+            {
+                // 其他状态码（401、400、500等）
+                // 仍尝试解析 JSON，看是否能获取后端返回的详细错误
+                try
+                {
+                    LoginResponse response = JsonUtility.FromJson<LoginResponse>(rawResponse);
+                    // 如果成功解析到 { success=false, message="..." }
+                    messageText.text = "登录失败: " + response.message;
+                }
+                catch
+                {
+                    // 如果解析失败，只能显示最简单的错误提示
+                    messageText.text = "请求失败: " + www.error;
                 }
             }
         }
