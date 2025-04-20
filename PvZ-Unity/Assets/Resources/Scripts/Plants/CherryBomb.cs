@@ -62,7 +62,7 @@ public class CherryBomb : Plant
                 hasDamaged = true;
                 
                 // 通知PlantGrid格子可以重新种植
-                plantGrid.plantDie("");
+                plantGrid.plantDie(this, "");
                 // 动画播放完成，销毁物体
                 Destroy(gameObject);
             }
