@@ -7,7 +7,7 @@ public class MotionPanel : MonoBehaviour
     bool moving = false;
 
     public Direction direction;
-    protected RectTransform rectTransform;   //×ÔÉíRectTransform×é¼þ
+    protected RectTransform rectTransform;   //ï¿½ï¿½ï¿½ï¿½RectTransformï¿½ï¿½ï¿½
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class MotionPanel : MonoBehaviour
 
     private void moveUp()
     {
-        float newY = rectTransform.anchoredPosition.y + 100 * Time.deltaTime; ;
+        float newY = rectTransform.anchoredPosition.y + 100 * Time.deltaTime;
         if (newY < 0)
         {
             rectTransform.anchoredPosition = new Vector3(0, newY, 0);

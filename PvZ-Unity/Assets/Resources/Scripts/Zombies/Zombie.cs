@@ -38,6 +38,10 @@ public class Zombie : MonoBehaviour, IPunObservable
     protected Vector3 initPosition; // 初始位置
     protected bool isDead = false;
 
+    // *** 新增：用于区分预览僵尸的标志 ***
+    [HideInInspector] // 不在 Inspector 中显示
+    public bool isPreviewZombie = false; 
+
     protected virtual void Awake()
     {
         //获取组件
@@ -53,15 +57,21 @@ public class Zombie : MonoBehaviour, IPunObservable
     // Start is called before the first frame update
     protected virtual void Start()
     {
+        // *** 只有在非预览僵尸时才随机化速度 ***
         // 生成时随机化速度，所有客户端使用相同的种子
-        if (photonView != null)
+        if (!isPreviewZombie && photonView != null) 
         {
             UnityEngine.Random.InitState((int)(photonView.ViewID * 100));
             float increase = UnityEngine.Random.Range(1.0f, 1.5f);
             speed = initSpeed * increase;
             myAnimator.speed = increase;
+            Debug.Log($"[Zombie Start] {gameObject.name} (Not Preview): Randomized speed to {speed}");
         }
-
+        else if (isPreviewZombie)
+        {
+             Debug.Log($"[Zombie Start] {gameObject.name} (Preview): Skipping speed randomization. Current speed: {speed}");
+        }
+        
         SpriteRenderer[] allSprites = GetComponentsInChildren<SpriteRenderer>(true);
         foreach (SpriteRenderer spriteRenderer in allSprites)
         {
@@ -69,10 +79,14 @@ public class Zombie : MonoBehaviour, IPunObservable
         }
 
         //初始化延迟一秒，使初始化延迟效果生效
-        if (sleep)
+        if (!isPreviewZombie && sleep) // *** 预览僵尸不应该延迟激活 ***
         {
             gameObject.SetActive(false);
             Invoke("activate", UnityEngine.Random.Range(0.0f, 5.0f));
+        }
+        else if (isPreviewZombie)
+        {
+             gameObject.SetActive(true); // 确保预览僵尸立即激活
         }
 
         bloodVolumeMax = bloodVolume;

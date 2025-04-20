@@ -2,10 +2,27 @@
 using System.Collections.Generic;
 using UnityEngine;
 using Spine.Unity;
+
+// ADD: Enum for plant categories
+public enum PlantCategory
+{
+    Normal,    // 普通植物 (Peashooter, Sunflower, etc.)
+    Shell,     // 壳类植物 (Pumpkin)
+    Carrier,   // 承载类植物 (Lily Pad, Flower Pot)
+    Flyer,     // 飞行/附加类植物 (Coffee Bean)
+    Upgrader,  // 升级类 (Gatling Pea, Winter Melon - maybe combine with Normal?)
+    Instant,   // 瞬时生效类 (Cherry Bomb, Potato Mine - maybe don't need grid slot?)
+    Special,   // 特殊类 (Doom-shroom, Grave Buster)
+    CraterMaker // 产生坑的植物 (Doom-shroom)
+}
+
 public class Plant : MonoBehaviour
 {
     protected PlantGrid myGrid;   //该植物所在Grid
     public int row;  //该植物在第几行
+
+    // ADD: Property to get the plant's category. Must be overridden by subclasses.
+    public virtual PlantCategory Category { get { return PlantCategory.Normal; } }
 
     public int bloodVolume;
     private int bloodVolumeMax;
@@ -175,7 +192,7 @@ public class Plant : MonoBehaviour
     public void die(string reason)
     {
         beforeDie();
-        myGrid.plantDie(reason);
+        myGrid.plantDie(this, reason);
         Destroy(gameObject);
     }
 

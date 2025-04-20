@@ -50,6 +50,7 @@ public class GameManagement : MonoBehaviour
         {
             gameObject.SetActive(true);
         }
+        uiManagement.GetComponent<UIManagement>().initUI();
         uiManagement.GetComponent<UIManagement>().appear();
         zombieManagement.GetComponent<ZombieManagement>().activate();
         levelController.activate();
