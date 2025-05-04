@@ -1,0 +1,124 @@
+{
+  "info": [
+    {
+      "deltaTime": 10,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 8,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 6,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 5,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    },
+    {
+      "deltaTime": 3,
+      "number": 1,
+      "wave": false,
+      "zombie": "ZombieNormal"
+    }
+  ]
+} 
